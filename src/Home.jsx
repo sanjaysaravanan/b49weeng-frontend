@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 import UserForm from "./UserForm";
 import UserList from "./UserList";
 import { createUser, getAllUsers } from "./crud";
 
-const Home = () => {
+const Home = ({ onlyListing }) => {
   const [data, setData] = useState([]);
 
   const createNewUser = async (user) => {
@@ -23,10 +24,14 @@ const Home = () => {
 
   return (
     <div>
-      <UserForm createNewUser={createNewUser} />
+      {!onlyListing && <UserForm createNewUser={createNewUser} />}
       <UserList users={data} />
     </div>
   );
+};
+
+Home.propTypes = {
+  onlyListing: PropTypes.bool,
 };
 
 export default Home;

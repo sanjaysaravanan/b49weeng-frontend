@@ -2,7 +2,8 @@ import axios from "axios";
 
 const backendUrl = import.meta.env
   ? import.meta.env.VITE_BE_URL // localhost
-  : process.env.VITE_BE_URL; // cloud;
+  : // eslint-disable-next-line no-undef
+    process.env.VITE_BE_URL; // cloud;
 
 const backend = axios.create({
   baseURL: backendUrl,
@@ -24,4 +25,25 @@ const getAllUsers = async () => {
   return response.data;
 };
 
-export { createUser, getAllUsers };
+// Auth related methods
+const registerUser = async (userData) => {
+  const response = await backend.post("/register", {
+    ...userData,
+  });
+
+  return response.data;
+};
+
+const loginUser = async (loginData) => {
+  try {
+    const response = await backend.post("/login", {
+      ...loginData,
+    });
+    return { ...response.data };
+  } catch (err) {
+    console.log(err);
+    return { msg: "Login failed", code: 0 };
+  }
+};
+
+export { createUser, getAllUsers, registerUser, loginUser };
