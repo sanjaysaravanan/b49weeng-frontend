@@ -46,4 +46,14 @@ const loginUser = async (loginData) => {
   }
 };
 
-export { createUser, getAllUsers, registerUser, loginUser };
+const verifyToken = async (token) => {
+  try {
+    const response = await backend.post(`/register/verify/${token}`, {});
+    return { ...response.data };
+  } catch (err) {
+    console.log(err);
+    return { msg: "Token verification failed", code: 0 };
+  }
+};
+
+export { createUser, getAllUsers, registerUser, loginUser, verifyToken };

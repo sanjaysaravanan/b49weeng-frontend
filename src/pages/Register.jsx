@@ -2,8 +2,11 @@
 import { useState } from "react";
 import "./Register.css";
 import { registerUser } from "../crud";
+import { Link, Navigate } from "react-router-dom";
 
 const Register = () => {
+  const isAuthenticated = Boolean(localStorage.getItem("isAuthenticated"));
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [dob, setDob] = useState("");
@@ -43,6 +46,10 @@ const Register = () => {
     // Add your registration logic here, like sending a request to a server
   };
 
+  if (isAuthenticated) {
+    return <Navigate to="/" />;
+  }
+
   return (
     <div className="register-form-container">
       <form onSubmit={handleSubmit} className="register-form">
@@ -75,8 +82,10 @@ const Register = () => {
           onChange={handleImageUrlChange}
           required
         />
-
-        <button type="submit">Register</button>
+        <div className="form-footer">
+          <button type="submit">Register</button>
+          <Link to="/login">Existing User?</Link>
+        </div>
       </form>
     </div>
   );

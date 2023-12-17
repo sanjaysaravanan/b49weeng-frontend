@@ -2,7 +2,7 @@
 import { useState } from "react";
 import "./Login.css";
 import { loginUser } from "../crud";
-import { Navigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 
 const Login = () => {
   const isAuthenticated = Boolean(localStorage.getItem("isAuthenticated"));
@@ -57,8 +57,10 @@ const Login = () => {
           onChange={handlePasswordChange}
           required
         />
-
-        <button type="submit">Login</button>
+        <div className="form-footer">
+          <button type="submit">Login</button>
+          <Link to="/register">New user?</Link>
+        </div>
       </form>
     </div>
   );
