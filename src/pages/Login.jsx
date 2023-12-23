@@ -27,6 +27,7 @@ const Login = () => {
     if (data.code) {
       // You direct the user to the home page
       localStorage.setItem("isAuthenticated", true);
+      localStorage.setItem("accessToken", data.accessToken);
       localStorage.setItem("userDetails", JSON.stringify(data.userDetails));
       setDirectToHome(true);
     } else {

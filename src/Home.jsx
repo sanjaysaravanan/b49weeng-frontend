@@ -17,6 +17,11 @@ const Home = ({ onlyListing }) => {
     setData(loadData);
   };
 
+  const logoutUser = () => {
+    localStorage.clear();
+    location.reload();
+  };
+
   useEffect(() => {
     // get all the users & load in state
     loadData();
@@ -24,6 +29,7 @@ const Home = ({ onlyListing }) => {
 
   return (
     <div>
+      <button onClick={logoutUser}>Logout</button>
       {!onlyListing && <UserForm createNewUser={createNewUser} />}
       <UserList users={data} />
     </div>

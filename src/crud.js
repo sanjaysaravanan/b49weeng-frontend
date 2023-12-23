@@ -10,6 +10,23 @@ const backend = axios.create({
   timeout: 10000,
 });
 
+backend.interceptors.response.use(
+  function (response) {
+    // Any status code that lie within the range of 2xx cause this function to trigger
+    // Do something with response data
+    return response;
+  },
+  function (error) {
+    // Any status codes that falls outside the range of 2xx cause this function to trigger
+    // Do something with response error
+    if (error.response.status === 401) {
+      localStorage.clear();
+      location.reload();
+    }
+    return Promise.reject(error);
+  }
+);
+
 // Creating an User
 const createUser = async (userData) => {
   const response = await backend.post("/users", {
@@ -20,8 +37,13 @@ const createUser = async (userData) => {
 };
 
 const getAllUsers = async () => {
-  const response = await backend.get("/users");
-
+  const response = await backend.get("/users", {
+    headers: {
+      "batch-name": "B49WEENG",
+      mentor: "Sanjay",
+      "auth-token": localStorage.getItem("accessToken"),
+    },
+  });
   return response.data;
 };
 
